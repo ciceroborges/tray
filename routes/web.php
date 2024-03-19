@@ -4,7 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', fn () => redirect('sales'));
+Route::get('/', fn () => redirect('sellers'));
 
 Route::middleware([
     
@@ -12,7 +12,37 @@ Route::middleware([
 
 ])->group(function () {
     
-    Route::get('/sales', fn () => Inertia::render('Sales'))->name('sales');
+    Route::get('/sales/{email}', function (string $email) { 
+        
+
+        // dd()
+        // dd($email);
+
+        $seller = [
+            'nome'  => 'Cícero Borges',
+            'email' => $email,
+        ];
+
+        $sales[] = array_merge($seller, [
+            'id'    => '2',
+            'comissao' => '850',
+            'valor'    => '10000',
+            'data'     => now()
+        ]);
+
+        $sales[] = array_merge($seller, [
+            'id'    => '1',
+            'comissao' => '1700',
+            'valor'    => '20000',
+            'data'     => now()
+        ]);
+
+        return Inertia::render('Sales/Index', [
+          'seller' => $seller,
+          'sales'  => $sales,  
+        ]);
     
-    Route::get('/sellers', fn () => Inertia::render('Sellers'))->name('sellers');
+    })->name('sales');
+    
+    Route::get('/sellers', fn () => Inertia::render('Sellers/Index'))->name('sellers');
 });

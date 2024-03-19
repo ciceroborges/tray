@@ -2,7 +2,7 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
-import DangerButton from '@/Components/DangerButton.vue';
+import { Link } from '@inertiajs/vue3';
 // import Welcome from '@/Components/Welcome.vue';
 </script>
 
@@ -24,11 +24,11 @@ import DangerButton from '@/Components/DangerButton.vue';
                 <div class="sm:flex items-center justify-between">
                     <div class="flex items-center">
                         <div class="max-w-xl text-sm text-gray-600 dark:text-gray-400">
-                            Listagem de vendedores cadastrados no Sistema.
+                            Listagem de Vendedores:
                         </div>
                     </div>
                     <PrimaryButton>
-                    Adicionar Vendedor
+                    Criar Vendedor
                     </PrimaryButton>
                     <!-- <button onclick="popuphandler(true)" class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 mt-4 sm:mt-0 inline-flex items-start justify-start px-6 py-3 bg-indigo-700 hover:bg-indigo-600 focus:outline-none rounded">
                         <p class="text-sm font-medium leading-none text-white">Add Task</p>
@@ -41,7 +41,7 @@ import DangerButton from '@/Components/DangerButton.vue';
                             <tr class="border-b border-gray-200 dark:border-gray-700 p-10">
                                 <td class="py-2 ">
                                     <div class="ml-5">
-                                        <div class="max-w-xl text-sm text-gray-600 dark:text-gray-400">
+                                        <div class="max-w-xl text-sm text-gray-600 dark:text-gray-400 ">
                                             #ID
                                         </div>
                                     </div>
@@ -93,13 +93,12 @@ import DangerButton from '@/Components/DangerButton.vue';
                                 <td>
                                     <div class="ml-5">
                                         <div class="max-w-xl text-sm text-gray-600 dark:text-gray-400">
-                                            <SecondaryButton>
-                                            Editar
-                                            </SecondaryButton>
-                                            &nbsp;
-                                            <DangerButton>
-                                            Excluir
-                                            </DangerButton>
+                                            <Link :href="route('sales', {email: 'ciceropborges@gmail.com'})">
+                                                <SecondaryButton>
+                                                    Gerenciar Vendas
+                                                </SecondaryButton>
+                                            </Link>
+                                            
                                         </div>
                                     </div>
                                 </td>
@@ -130,12 +129,8 @@ import DangerButton from '@/Components/DangerButton.vue';
                                     <div class="ml-5">
                                         <div class="max-w-xl text-sm text-gray-600 dark:text-gray-400">
                                             <SecondaryButton>
-                                            Editar
+                                            Gerenciar Vendas
                                             </SecondaryButton>
-                                            &nbsp;
-                                            <DangerButton>
-                                            Excluir
-                                            </DangerButton>
                                         </div>
                                     </div>
                                 </td>
