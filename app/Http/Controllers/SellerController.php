@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Seller;
 use Illuminate\Http\Request;
 
 class SellerController extends Controller
@@ -11,23 +12,7 @@ class SellerController extends Controller
      */
     public function index()
     {
-        $sellers[] = [
-            'id'    => 1,
-            'nome'  => 'Cícero Borges',
-            'email' => 'ciceropborges@gmail.com',
-        ];
-
-        $sellers[] = [
-            'id'    => 2,
-            'nome'  => 'Luiz da Silva',
-            'email' => 'luizdasilva@gmail.com',
-        ];
-
-        $sellers[] = [
-            'id'    => 3,
-            'nome'  => 'João da Silva',
-            'email' => 'zsilva@gmail.com',
-        ];
+        $sellers = Seller::get();
 
         return inertia('Seller/Index', ['sellers' => $sellers]);
     }

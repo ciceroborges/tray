@@ -113,19 +113,19 @@ const getDate = (date) => {
                         </div>
                         <div  class="ms-3">
                             <div class="text-xs text-gray-300">
-                                <span class="text-green-500 font-semibold">Nome:</span> {{ sale.nome }}
+                                <span class="text-green-500 font-semibold">Nome:</span> {{ sale.name }}
                             </div>
                             <div class="text-xs text-gray-300">
                                 <span class="text-green-500 font-semibold">Email:</span> {{ sale.email }}
                             </div>
                             <div class="text-xs text-gray-300">
-                                <span class="text-green-500 font-semibold">Comissão:</span> {{ getMoney(sale.comissao) }}
+                                <span class="text-green-500 font-semibold">Comissão:</span> {{ getMoney(sale.commission) }}
                             </div>
                             <div class="text-xs text-gray-300">
-                                <span class="text-green-500 font-semibold">Valor:</span> {{ getMoney(sale.valor) }}
+                                <span class="text-green-500 font-semibold">Valor:</span> {{ getMoney(sale.value) }}
                             </div>
                             <div class="text-xs text-gray-300">
-                                <span class="text-green-500 font-semibold">Data:</span> {{ getDate(sale.data) }}
+                                <span class="text-green-500 font-semibold">Data:</span> {{ getDate(sale.created_at) }}
                             </div>
                         </div>
                         <br>

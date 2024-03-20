@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Seller;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
@@ -9,26 +10,9 @@ class SaleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(string $email)
-    {
-        $seller = [
-            'nome'  => $email,
-            'email' => $email,
-        ];
-        
-        $sales[] = array_merge($seller, [
-            'id'       =>  2,
-            'comissao' => '850',
-            'valor'    => '10000',
-            'data'     => now()
-        ]);
-
-        $sales[] = array_merge($seller, [
-            'id'       => 1,
-            'comissao' => '1700',
-            'valor'    => '20000',
-            'data'     => now()
-        ]);
+    public function index(Seller $seller)
+    {   
+        $sales = $seller->sales()->orderByDesc('id')->get();
 
         return inertia('Sale/Index', [
             'seller' => $seller, 

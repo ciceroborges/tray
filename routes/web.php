@@ -22,7 +22,7 @@ Route::middleware([
         // Retorna a tela de criação de um novo vendedor
         Route::get('/create', [ SellerController::class, 'create' ])->name('seller.create');
         // Retorna as vendas do vendedor
-        Route::get('/{email}/sale', [ SaleController::class, 'index' ])->name('sale');
+        Route::get('/{seller}/sale', [ SaleController::class, 'index' ])->name('sale');
     });
 
     Route::group(['prefix' => 'sale'], function() {

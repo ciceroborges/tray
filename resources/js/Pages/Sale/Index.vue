@@ -14,7 +14,7 @@ const props = defineProps({
     <AppLayout title="Profile">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                Vendas de {{ seller.nome }}
+                Vendas de {{ seller.name }}
             </h2>
         </template>
 
