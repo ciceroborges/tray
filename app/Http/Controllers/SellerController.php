@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SellerRequest;
 use App\Models\Seller;
-use Illuminate\Http\Request;
 
 class SellerController extends Controller
 {
@@ -28,8 +28,10 @@ class SellerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(SellerRequest $request)
     {
-        //
+        Seller::create($request->validated());
+
+        return $this->index();
     }
 }

@@ -1,105 +1,29 @@
 <script setup>
-import { ref } from 'vue';
-import { Link, router, useForm } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 import ActionMessage from '@/Components/ActionMessage.vue';
 import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 
-// const props = defineProps({
-//     user: Object,
-//     sales: Array,
-// });
-
 const form = useForm({
-    _method: 'PUT',
-    // name: props.user.name,
-    // email: props.user.email,
-    photo: null,
+    _method: 'POST',
+    name: '',
+    email: '',
 });
 
-const verificationLinkSent = ref(null);
-const photoPreview = ref(null);
-const photoInput = ref(null);
-
-const updateProfileInformation = () => {
-    if (photoInput.value) {
-        form.photo = photoInput.value.files[0];
-    }
-
-    form.post(route('user-profile-information.update'), {
-        errorBag: 'updateProfileInformation',
-        preserveScroll: true,
-        onSuccess: () => clearPhotoFileInput(),
+const createSeller = () => {
+    form.post(route('seller'), {
+        errorBag: 'createSeller',
+        preserveScroll: true
     });
 };
 
-const sendEmailVerification = () => {
-    verificationLinkSent.value = true;
-};
-
-const selectNewPhoto = () => {
-    photoInput.value.click();
-};
-
-const updatePhotoPreview = () => {
-    const photo = photoInput.value.files[0];
-
-    if (! photo) return;
-
-    const reader = new FileReader();
-
-    reader.onload = (e) => {
-        photoPreview.value = e.target.result;
-    };
-
-    reader.readAsDataURL(photo);
-};
-
-const deletePhoto = () => {
-    router.delete(route('current-user-photo.destroy'), {
-        preserveScroll: true,
-        onSuccess: () => {
-            photoPreview.value = null;
-            clearPhotoFileInput();
-        },
-    });
-};
-
-const clearPhotoFileInput = () => {
-    if (photoInput.value?.value) {
-        photoInput.value.value = null;
-    }
-};
-
-const getMoney = (value) => {
-    return (value / 100).toLocaleString('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-    });   
-}
-
-const getDate = (date) => {
-    return new Date(date).toLocaleString('pt-BR', {
-        timeZone: 'America/Sao_Paulo',
-        day: 'numeric',
-        month: 'numeric',
-        year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-    });
-}
 </script>
 
 <template>
-    <FormSection @submitted="updateProfileInformation">
-        <!-- <template #title>
-            Gerenciamento de Vendas:
-        </template> -->
+    <FormSection @submitted="createSeller">
 
         <template #description>
             Para criar um(a) novo(a) vendedor(a), preencha os campos no formulário e clique em salvar.
