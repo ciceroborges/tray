@@ -1,78 +1,33 @@
 <script setup>
-import { ref } from 'vue';
-import { Link, router, useForm } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 import ActionMessage from '@/Components/ActionMessage.vue';
 import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import MoneyInput from '@/Components/MoneyInput.vue';
 
 const props = defineProps({
-    user: Object,
+    seller: Object,
     sales: Array,
 });
 
 const form = useForm({
-    _method: 'PUT',
-    name: props.user.name,
-    email: props.user.email,
-    photo: null,
+    _method: 'POST',
+    seller_id: props.seller.id,
+    value: '0',
 });
 
-const verificationLinkSent = ref(null);
-const photoPreview = ref(null);
-const photoInput = ref(null);
+const storeSale = () => {
+    // removendo mascara antes de enviar para a API
+    form.value = parseInt(form.value.replace(/\D/g, ''))
 
-const updateProfileInformation = () => {
-    if (photoInput.value) {
-        form.photo = photoInput.value.files[0];
-    }
-
-    form.post(route('user-profile-information.update'), {
-        errorBag: 'updateProfileInformation',
+    form.post(route('sale.store'), {
+        errorBag: 'storeSale',
         preserveScroll: true,
-        onSuccess: () => clearPhotoFileInput(),
+        onSuccess: () => (form.value = '0'),
     });
-};
-
-const sendEmailVerification = () => {
-    verificationLinkSent.value = true;
-};
-
-const selectNewPhoto = () => {
-    photoInput.value.click();
-};
-
-const updatePhotoPreview = () => {
-    const photo = photoInput.value.files[0];
-
-    if (! photo) return;
-
-    const reader = new FileReader();
-
-    reader.onload = (e) => {
-        photoPreview.value = e.target.result;
-    };
-
-    reader.readAsDataURL(photo);
-};
-
-const deletePhoto = () => {
-    router.delete(route('current-user-photo.destroy'), {
-        preserveScroll: true,
-        onSuccess: () => {
-            photoPreview.value = null;
-            clearPhotoFileInput();
-        },
-    });
-};
-
-const clearPhotoFileInput = () => {
-    if (photoInput.value?.value) {
-        photoInput.value.value = null;
-    }
 };
 
 const getMoney = (value) => {
@@ -96,7 +51,7 @@ const getDate = (date) => {
 </script>
 
 <template>
-    <FormSection @submitted="updateProfileInformation">
+    <FormSection @submitted="storeSale">
         <template #description>
             Para lançar uma nova venda, preencha o valor no formulário e clique em salvar.
 
@@ -136,15 +91,26 @@ const getDate = (date) => {
 
         <template #form>
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="value" value="Valor da Venda" />
+                <InputLabel for="seller_id" value="#ID do(a) Vendendor(a)" />
                 <TextInput
+                    id="seller_id"
+                    v-model="form.seller_id"
+                    type="number"
+                    class="mt-1 block w-full"
+                    required
+                    disabled
+                />
+                <InputError :message="form.errors.seller_id" class="mt-2" />
+            </div>
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="value" value="Valor da Venda" />
+                <MoneyInput
                     id="value"
                     v-model="form.value"
-                    type="text"
                     class="mt-1 block w-full"
                     required
                 />
-                <InputError :message="form.errors.name" class="mt-2" />
+                <InputError :message="form.errors.value" class="mt-2" />
             </div>
         </template>
 

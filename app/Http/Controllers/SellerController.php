@@ -12,7 +12,7 @@ class SellerController extends Controller
      */
     public function index()
     {
-        $sellers = Seller::get();
+        $sellers = Seller::with('sales')->orderByDesc('id')->get();
 
         return inertia('Seller/Index', ['sellers' => $sellers]);
     }

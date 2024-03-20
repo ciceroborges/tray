@@ -62,6 +62,13 @@ const props = defineProps({
                                             <td>
                                                 <div class="ml-5">
                                                     <div class="max-w-xl text-sm text-gray-600 dark:text-gray-400">
+                                                        Vendas
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="ml-5">
+                                                    <div class="max-w-xl text-sm text-gray-600 dark:text-gray-400">
                                                         Ação
                                                     </div>
                                                 </div>
@@ -86,6 +93,13 @@ const props = defineProps({
                                                 <div class="ml-5">
                                                     <div class="max-w-xl text-sm text-gray-600 dark:text-gray-400">
                                                         {{ seller.email }}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="ml-5">
+                                                    <div class="max-w-xl text-sm text-gray-600 dark:text-gray-400">
+                                                        {{ seller.sales.length }}
                                                     </div>
                                                 </div>
                                             </td>

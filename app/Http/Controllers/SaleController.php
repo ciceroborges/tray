@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SaleRequest;
+use App\Models\Sale;
 use App\Models\Seller;
-use Illuminate\Http\Request;
 
 class SaleController extends Controller
 {
@@ -23,8 +24,24 @@ class SaleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(SaleRequest $request)
     {
-        //
+        $seller = Seller::find($request->seller_id);
+
+        $tax = (8.5 / 100); // Taxa de comissão em decimal;
+
+        $commission = (int) round($request->value * $tax);
+
+        $data = [
+            'seller_id'  => $request->seller_id,
+            'name'       => $seller->name,
+            'email'      => $seller->email,
+            'commission' => $commission,
+            'value'      => $request->value,
+        ];
+
+        Sale::create($data);
+
+        return $this->index($seller);
     }
 }

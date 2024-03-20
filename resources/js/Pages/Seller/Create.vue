@@ -13,9 +13,9 @@ const form = useForm({
     email: '',
 });
 
-const createSeller = () => {
-    form.post(route('seller'), {
-        errorBag: 'createSeller',
+const storeSeller = () => {
+    form.post(route('seller.store'), {
+        errorBag: 'storeSeller',
         preserveScroll: true
     });
 };
@@ -23,7 +23,7 @@ const createSeller = () => {
 </script>
 
 <template>
-    <FormSection @submitted="createSeller">
+    <FormSection @submitted="storeSeller">
 
         <template #description>
             Para criar um(a) novo(a) vendedor(a), preencha os campos no formulário e clique em salvar.
@@ -39,7 +39,6 @@ const createSeller = () => {
                     type="text"
                     class="mt-1 block w-full"
                     required
-                    autocomplete="name"
                 />
                 <InputError :message="form.errors.name" class="mt-2" />
             </div>
@@ -53,7 +52,6 @@ const createSeller = () => {
                     type="email"
                     class="mt-1 block w-full"
                     required
-                    autocomplete="username"
                 />
                 <InputError :message="form.errors.email" class="mt-2" />
             </div>
