@@ -34,4 +34,14 @@ class SellerController extends Controller
 
         return $this->index();
     }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Seller $seller)
+    {
+        Seller::destroy($seller->id);
+
+        return $this->index();
+    }
 }

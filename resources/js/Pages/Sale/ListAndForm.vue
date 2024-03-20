@@ -1,12 +1,14 @@
 <script setup>
-import { useForm } from '@inertiajs/vue3';
+import { Link, useForm } from '@inertiajs/vue3';
 import ActionMessage from '@/Components/ActionMessage.vue';
 import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import MoneyInput from '@/Components/MoneyInput.vue';
+import { helpers } from '@/helpers.js';
 
 const props = defineProps({
     seller: Object,
@@ -30,24 +32,6 @@ const storeSale = () => {
     });
 };
 
-const getMoney = (value) => {
-    return (value / 100).toLocaleString('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-    });   
-}
-
-const getDate = (date) => {
-    return new Date(date).toLocaleString('pt-BR', {
-        timeZone: 'America/Sao_Paulo',
-        day: 'numeric',
-        month: 'numeric',
-        year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-    });
-}
 </script>
 
 <template>
@@ -74,13 +58,13 @@ const getDate = (date) => {
                                 <span class="text-green-500 font-semibold">Email:</span> {{ sale.email }}
                             </div>
                             <div class="text-xs text-gray-300">
-                                <span class="text-green-500 font-semibold">Comissão:</span> {{ getMoney(sale.commission) }}
+                                <span class="text-green-500 font-semibold">Comissão:</span> {{ helpers.getMoney(sale.commission) }}
                             </div>
                             <div class="text-xs text-gray-300">
-                                <span class="text-green-500 font-semibold">Valor:</span> {{ getMoney(sale.value) }}
+                                <span class="text-green-500 font-semibold">Valor:</span> {{ helpers.getMoney(sale.value) }}
                             </div>
                             <div class="text-xs text-gray-300">
-                                <span class="text-green-500 font-semibold">Data:</span> {{ getDate(sale.created_at) }}
+                                <span class="text-green-500 font-semibold">Data:</span> {{ helpers.getDate(sale.created_at) }}
                             </div>
                         </div>
                         <br>
@@ -118,7 +102,13 @@ const getDate = (date) => {
             <ActionMessage :on="form.recentlySuccessful" class="me-3">
                 Salvo.
             </ActionMessage>
-
+                
+            <Link :href="route('seller')">
+                <SecondaryButton>
+                    Voltar
+                </SecondaryButton>
+            </Link>
+            &nbsp;&nbsp;&nbsp;
             <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                 Salvar
             </PrimaryButton>

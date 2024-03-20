@@ -19,7 +19,24 @@ class Seller extends Model
         'email'
     ];
 
+    protected $appends = [
+        'total_commissions', 
+        'total_sales'
+    ];
+
     public function sales() {
         return $this->hasMany(Sale::class);
+    }
+
+    public function getTotalCommissionsAttribute()
+    {
+        // Usando a relação hasMany para calcular o total de comissões
+        return (int) $this->sales()->sum('commission');
+    }
+
+    public function getTotalSalesAttribute()
+    {
+        // Usando a relação hasMany para calcular o total de vendas
+        return (int) $this->sales()->sum('value');
     }
 }

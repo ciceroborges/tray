@@ -17,6 +17,8 @@ Route::middleware([
     Route::group(['prefix' => 'seller'], function() {
         // Salva um novo vendedor
         Route::post('/', [ SellerController::class, 'store' ])->name('seller.store');
+        // Deleta um vendedor e as suas vendas
+        Route::delete('/{seller}', [ SellerController::class, 'destroy' ])->name('seller.destroy');
         // Retorna a tela de listagem de vendedores
         Route::get('/', [ SellerController::class, 'index' ])->name('seller');
         // Retorna a tela de criação de um novo vendedor
