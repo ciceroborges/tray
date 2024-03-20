@@ -23,6 +23,12 @@ class SellerController extends Controller
             'email' => 'luizdasilva@gmail.com',
         ];
 
+        $sellers[] = [
+            'id'    => 3,
+            'nome'  => 'João da Silva',
+            'email' => 'zsilva@gmail.com',
+        ];
+
         return inertia('Seller/Index', ['sellers' => $sellers]);
     }
 

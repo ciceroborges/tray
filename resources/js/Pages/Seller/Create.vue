@@ -102,7 +102,7 @@ const getDate = (date) => {
         </template> -->
 
         <template #description>
-            Para criar um(a) novo(a) vendedor(a), preencha os campos no formulário ao lado e clique em salvar.
+            Para criar um(a) novo(a) vendedor(a), preencha os campos no formulário e clique em salvar.
         </template>
 
         <template #form>

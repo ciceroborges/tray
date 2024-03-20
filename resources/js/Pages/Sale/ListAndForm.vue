@@ -98,7 +98,7 @@ const getDate = (date) => {
 <template>
     <FormSection @submitted="updateProfileInformation">
         <template #description>
-            Para lançar uma nova venda, preencha o valor no formulário ao lado e clique em salvar.
+            Para lançar uma nova venda, preencha o valor no formulário e clique em salvar.
 
             <div class="px-4 py-5 sm:p-6 bg-white dark:bg-gray-800 shadow sm:rounded-lg mt-6">
 
