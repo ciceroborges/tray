@@ -1,10 +1,11 @@
 <script setup>
-import { useForm } from '@inertiajs/vue3';
+import { Link, useForm } from '@inertiajs/vue3';
 import ActionMessage from '@/Components/ActionMessage.vue';
 import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 
 const form = useForm({
@@ -61,7 +62,12 @@ const storeSeller = () => {
             <ActionMessage :on="form.recentlySuccessful" class="me-3">
                 Salvo.
             </ActionMessage>
-
+            <Link :href="route('seller')">
+                <SecondaryButton>
+                    Voltar
+                </SecondaryButton>
+            </Link>
+            &nbsp;&nbsp;&nbsp;
             <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                 Salvar
             </PrimaryButton>
