@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import SectionBorder from '@/Components/SectionBorder.vue';
-import ListAndForm from '@/Pages/Sales/ListAndForm.vue';
+import ListAndForm from '@/Pages/Sale/ListAndForm.vue';
 
 const props = defineProps({
     seller: Object,

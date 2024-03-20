@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\SellerController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', fn () => redirect('sellers'));
+Route::get('/', fn () => redirect('seller'));
 
 Route::middleware([
     
@@ -12,37 +14,20 @@ Route::middleware([
 
 ])->group(function () {
     
-    Route::get('/sales/{email}', function (string $email) { 
-        
+    Route::group(['prefix' => 'seller'], function() {
+        // Salva um novo vendedor
+        Route::post('/', [ SellerController::class, 'store' ])->name('seller.store');
+        // Retorna a tela de listagem de vendedores
+        Route::get('/', [ SellerController::class, 'index' ])->name('seller');
+        // Retorna a tela de criação de um novo vendedor
+        Route::get('/create', [ SellerController::class, 'create' ])->name('seller.create');
+        // Retorna as vendas do vendedor
+        Route::get('/{email}/sale', [ SaleController::class, 'index' ])->name('sale');
+    });
 
-        // dd()
-        // dd($email);
+    Route::group(['prefix' => 'sale'], function() {
+        // Salva uma nova venda
+        Route::post('/', [ SaleController::class, 'store' ])->name('sale.store');
+    });
 
-        $seller = [
-            'nome'  => 'Cícero Borges',
-            'email' => $email,
-        ];
-
-        $sales[] = array_merge($seller, [
-            'id'    => '2',
-            'comissao' => '850',
-            'valor'    => '10000',
-            'data'     => now()
-        ]);
-
-        $sales[] = array_merge($seller, [
-            'id'    => '1',
-            'comissao' => '1700',
-            'valor'    => '20000',
-            'data'     => now()
-        ]);
-
-        return Inertia::render('Sales/Index', [
-          'seller' => $seller,
-          'sales'  => $sales,  
-        ]);
-    
-    })->name('sales');
-    
-    Route::get('/sellers', fn () => Inertia::render('Sellers/Index'))->name('sellers');
 });

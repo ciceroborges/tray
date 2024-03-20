@@ -9,15 +9,15 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 
-const props = defineProps({
-    user: Object,
-    sales: Array,
-});
+// const props = defineProps({
+//     user: Object,
+//     sales: Array,
+// });
 
 const form = useForm({
     _method: 'PUT',
-    name: props.user.name,
-    email: props.user.email,
+    // name: props.user.name,
+    // email: props.user.email,
     photo: null,
 });
 
@@ -102,55 +102,36 @@ const getDate = (date) => {
         </template> -->
 
         <template #description>
-            Para lançar uma nova venda, preencha o valor no formulário ao lado e clique em salvar.
-
-   
-            
-            <!-- <div v-for="(sale, index) in sales" :key="index" class="mt-2 mb-2">
-                {{ sale }}
-            </div> -->
-
-            <div class="px-4 py-5 sm:p-6 bg-white dark:bg-gray-800 shadow sm:rounded-lg mt-6">
-   <div class="max-w-xl text-sm text-gray-600 dark:text-gray-400"> Leve em consideração que as vendas mais recentes aparecerão sempre no topo desta lista:  </div>
-   <!-- Other Browser Sessions -->
-   <div v-for="(sale, index) in sales" :key="index" class="mt-5 space-y-6">
-      <div class="flex items-center">
-         <div class="text-xl text-gray-400">
-            #{{ sale.id }}
-            <!-- <svg class="w-8 h-8 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-               <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"></path>
-            </svg> -->
-         </div>
-            <div  class="ms-3">
-
-
-                <div class="text-xs text-gray-300"><span class="text-green-500 font-semibold">Nome:</span> {{ sale.nome }}</div>
-                <div class="text-xs text-gray-300"><span class="text-green-500 font-semibold">Email:</span> {{ sale.email }}</div>
-                <div class="text-xs text-gray-300"><span class="text-green-500 font-semibold">Comissão:</span> {{ getMoney(sale.comissao) }}</div>
-                <div class="text-xs text-gray-300"><span class="text-green-500 font-semibold">Valor:</span> {{ getMoney(sale.valor) }}</div>
-                <div class="text-xs text-gray-300"><span class="text-green-500 font-semibold">Data:</span> {{ getDate(sale.data) }}</div>
-            
-            </div>
-            <br>
-      </div>
-   </div>
-
-
-</div>
+            Para criar um(a) novo(a) vendedor(a), preencha os campos no formulário ao lado e clique em salvar.
         </template>
 
         <template #form>
             <!-- Name -->
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="value" value="Valor da Venda" />
+                <InputLabel for="name" value="Nome" />
                 <TextInput
-                    id="value"
-                    v-model="form.value"
+                    id="name"
+                    v-model="form.name"
                     type="text"
                     class="mt-1 block w-full"
                     required
+                    autocomplete="name"
                 />
                 <InputError :message="form.errors.name" class="mt-2" />
+            </div>
+
+            <!-- Email -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="email" value="E-mail" />
+                <TextInput
+                    id="email"
+                    v-model="form.email"
+                    type="email"
+                    class="mt-1 block w-full"
+                    required
+                    autocomplete="username"
+                />
+                <InputError :message="form.errors.email" class="mt-2" />
             </div>
         </template>
 
