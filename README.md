@@ -41,5 +41,5 @@ Utilizei alguns patterns como:
     - Padrão comportamental que define uma relação de dependência entre objetos de modo que quando um objeto muda de estado, todos os seus dependentes são notificados e atualizados automaticamente;
 - Event/Listener Pattern: 
     - Padrão usado para implementar a comunicação assíncrona e desacoplada entre partes do sistema.
-Event Queue:
+- Event Queue:
     - Técnica frequentemente usada em sistemas que lidam com eventos assíncronos ou operações demoradas. Os eventos são colocados em uma fila e processados em ordem, garantindo que não haja interrupções na execução do sistema enquanto eventos são processados em segundo plano.
