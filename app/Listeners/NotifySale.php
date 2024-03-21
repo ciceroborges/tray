@@ -23,6 +23,6 @@ class NotifySale implements ShouldQueue
      */
     public function handle(SaleCreated $event): void
     {
-        $this->userService->notify($event->sale->toArray());
+        $this->userService->notify($event->sale);
     }
 }

@@ -5,10 +5,11 @@ namespace App\Notifications;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class SalesDailyReport extends Notification implements ShouldQueue
+class SalesReport extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -16,7 +17,7 @@ class SalesDailyReport extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      */
-    public function __construct(array $sales)
+    public function __construct(Collection $sales)
     {
         $this->sales = $sales;
     }
@@ -43,19 +44,26 @@ class SalesDailyReport extends Notification implements ShouldQueue
         $mail = (new MailMessage)->subject("Relatório diário de vendas")
             ->greeting("Saudações, {$notifiable->name}!") 
             ->line("Aqui está um resumo das vendas de hoje {$date}");
-
+        
+        $mail->line("Valor total de vendas: " . $this->getMoney($this->sales->sum('value')));
+            
+        $mail->line("Valor total de comissões: " . $this->getMoney($this->sales->sum('commission')));
+        
+        $mail->line('--------------------------------------'); 
+        
         foreach ($this->sales as $sale) {
-            $mail->line("Venda: #{$sale['id']}");
+
+            $mail->line("Venda: #{$sale->id}");
             
-            $mail->line("Nome: {$sale['name']}");
+            $mail->line("Nome: {$sale->name}");
             
-            $mail->line("Email: {$sale['email']}");
+            $mail->line("Email: {$sale->email}");
 
-            $mail->line("Comissão: " . $this->getMoney($sale['commission']));
+            $mail->line("Comissão: " . $this->getMoney($sale->commission));
 
-            $mail->line("Valor: " . $this->getMoney($sale['value']));
+            $mail->line("Valor: " . $this->getMoney($sale->value));
 
-            $mail->line("Data: " . Carbon::parse($sale['created_at'])
+            $mail->line("Data: " . Carbon::parse($sale->created_at)
                 ->setTimezone('America/Sao_Paulo')
                 ->format('d/m/Y H:i:s')
             );

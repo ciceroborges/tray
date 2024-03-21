@@ -2,13 +2,14 @@
 
 namespace App\Notifications;
 
+use App\Models\Sale;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class Sale extends Notification implements ShouldQueue
+class SaleReport extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -16,7 +17,7 @@ class Sale extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      */
-    public function __construct(array $sale)
+    public function __construct(Sale $sale)
     {
         $this->sale = $sale;
     }
@@ -41,17 +42,17 @@ class Sale extends Notification implements ShouldQueue
             ->line("Parabéns! Uma nova venda foi realizada!");
 
         
-        $mail->line("Venda: #{$this->sale['id']}");
+        $mail->line("Venda: #{$this->sale->id}");
         
-        $mail->line("Nome: {$this->sale['name']}");
+        $mail->line("Nome: {$this->sale->name}");
         
-        $mail->line("Email: {$this->sale['email']}");
+        $mail->line("Email: {$this->sale->email}");
 
-        $mail->line("Comissão: " . $this->getMoney($this->sale['commission']));
+        $mail->line("Comissão: " . $this->getMoney($this->sale->commission));
 
-        $mail->line("Valor: " . $this->getMoney($this->sale['value']));
+        $mail->line("Valor: " . $this->getMoney($this->sale->value));
 
-        $mail->line("Data: " . Carbon::parse($this->sale['created_at'])
+        $mail->line("Data: " . Carbon::parse($this->sale->created_at)
             ->setTimezone('America/Sao_Paulo')
             ->format('d/m/Y H:i:s')
         );

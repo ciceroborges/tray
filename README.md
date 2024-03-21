@@ -31,7 +31,7 @@ Este projeto foi construido com a versão mais recente do Laravel 11 até o mome
 - Ziggy, 
 - entre outras...
 
-## Padrão de projeto
+## Padrões de projeto
 Utilizei alguns patterns como: 
 - Service Layer: 
     - Padrão arquitetural que separa a lógica de negócios do resto da aplicação;

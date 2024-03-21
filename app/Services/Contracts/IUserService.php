@@ -2,6 +2,7 @@
 
 namespace App\Services\Contracts;
 
+use App\Models\Sale;
 use App\Repositories\Contracts\IUserRepository;
 
 interface IUserService
@@ -14,8 +15,8 @@ interface IUserService
     /**
      * notify all users.
      * 
-     * @param array $sale.
+     * @param ?Sale $sale.
      * @return bool
      */
-    public function notify(array $sale = []): bool;
+    public function notify(?Sale $sale = null): bool;
 }

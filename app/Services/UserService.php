@@ -2,7 +2,8 @@
 
 namespace App\Services;
 
-use App\Notifications\Sale;
+use App\Models\Sale;
+use App\Notifications\Sale as SaleReport;
 use App\Notifications\SalesDailyReport;
 use App\Repositories\Contracts\IUserRepository;
 use App\Services\Contracts\ISaleService;
@@ -27,26 +28,24 @@ class UserService implements IUserService
      /**
      * notify all users.
      * 
-     * @param string $type.
+     * @param Sale $sale.
      * @return bool
      */
-    public function notify(array $sale = []) : bool 
+    public function notify(?Sale $sale = null) : bool 
     {   
-        $class = "\App\Notifications";
+        $prefix = isset($sale) ? '\Sale': '\Sales';
 
-        $data = $sale;
-        $hasData = !empty($data);
+        $class = "\App\Notifications" . $prefix . "Report";
 
-        $class .= $hasData ? '\Sale' : '\SalesDailyReport';
-
-        if(!$hasData) {
-            $date = Carbon::now('America/Sao_Paulo')->toDateString();
-            $data = $this->saleService->findAll($date)->toArray();
+        if($prefix == '\Sales') {
+            $sales = $this->saleService->findAll(
+                Carbon::now('America/Sao_Paulo')->toDateString()
+            );
         }
         
         $users = $this->repository->findAll();
 
-        $notification = new $class($data);
+        $notification = new $class($sale ?? $sales);
 
         Notification::send($users, $notification);
 
