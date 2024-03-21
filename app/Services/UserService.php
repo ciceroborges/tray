@@ -34,11 +34,12 @@ class UserService implements IUserService
     {   
         $class = "\App\Notifications";
 
-        $hasSale = !empty($sale);
+        $data = $sale;
+        $hasData = !empty($data);
 
-        $class .= $hasSale ? '\Sale' : '\SalesDailyReport';
+        $class .= $hasData ? '\Sale' : '\SalesDailyReport';
 
-        if(!$hasSale) {
+        if(!$hasData) {
             $date = Carbon::now('America/Sao_Paulo')->toDateString();
             $data = $this->saleService->findAll($date)->toArray();
         }
