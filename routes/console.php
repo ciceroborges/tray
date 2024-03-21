@@ -1,10 +1,7 @@
 <?php
 
-use App\Models\User;
-use App\Notifications\SaleReport;
-use Illuminate\Support\Facades\Notification;
+use App\Services\Contracts\IUserService;
 use Illuminate\Support\Facades\Schedule;
 
-Schedule::call(function () {
-    Notification::sendNow(User::all(), new SaleReport());
-})->dailyAt('00:00');
+// Notifica uma vez por dia todas as vendas aos usuários
+Schedule::call(fn (IUserService $service) => $service->notify())->dailyAt('21:00');

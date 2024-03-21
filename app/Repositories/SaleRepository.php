@@ -35,6 +35,24 @@ class SaleRepository implements ISaleRepository
     /**
      * Find all resources from storage.
      * 
+     * @param array $filter
+     * @param string $order. Default is desc.
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function findAll(string $date = '', string $order = 'desc'): Collection
+    {   
+        $query = $this->model->with($this->relations);
+
+        $query->when(!empty($date), function ($query) use ($date){
+            $query->whereDate('created_at', $date);
+        });
+
+        return $query->orderBy('id', $order)->get();
+    }
+
+    /**
+     * Find all resources from a seller.
+     * 
      * @param int $sellerID
      * @param string $order. Default is desc.
      * @return \Illuminate\Database\Eloquent\Collection

@@ -50,6 +50,16 @@ class SaleService implements ISaleService
       * 
       * @return \Illuminate\Database\Eloquent\Collection
       */
+      public function findAll(string $date = '', string $order = 'desc'): Collection
+      {
+          return $this->repository->findAll($date, $order);
+      }
+
+     /**
+      * Find all resources from storage.
+      * 
+      * @return \Illuminate\Database\Eloquent\Collection
+      */
      public function findAllBySeller(int $sellerID, string $order = 'desc'): Collection
      {
          return $this->repository->findAllBySeller($sellerID, $order);

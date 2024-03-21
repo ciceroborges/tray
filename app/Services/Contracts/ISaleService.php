@@ -22,6 +22,14 @@ interface ISaleService
     public function create(array $data): Sale;
 
     /**
+      * Find all resources from storage.
+      * @param array $filter
+      * @param string $order. Default is desc.
+      * @return \Illuminate\Database\Eloquent\Collection
+      */
+    public function findAll(string $date = '', string $order = 'desc'): Collection;
+
+    /**
      * Find all resources from storage.
      * 
      * @param int $sellerID

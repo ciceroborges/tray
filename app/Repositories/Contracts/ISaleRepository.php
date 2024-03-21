@@ -23,6 +23,15 @@ interface ISaleRepository
     /**
      * Find all resources from storage.
      * 
+     * @param array $filter
+     * @param string $order. Default is desc.
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function findAll(string $date = '', string $order = 'desc'): Collection;
+
+    /**
+     * Find all resources from a seller.
+     * 
      * @param int $sellerID
      * @param string $order. Default is desc.
      * @return \Illuminate\Database\Eloquent\Collection
