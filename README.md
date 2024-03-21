@@ -5,7 +5,7 @@ dessas vendas (8.5% sobre o valor da venda).
 ## Funcionalidades:
 A aplicação conta com as seguintes funcionalidades:
 - Autenticação em geral: 
--- cadastro e login de usuários;
+cadastro e login de usuários;
 -- edição de perfil (nome, email e senha);
 -- gerenciamento de sessões;
 -- exclusão de conta.
