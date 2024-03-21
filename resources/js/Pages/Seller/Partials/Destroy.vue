@@ -16,8 +16,7 @@ const form = useForm({
 });
 
 const destroySeller = () => {
-    console.log(props.seller.id);
-    form.delete(`/seller/${props.seller.id}`, {
+    form.delete(`seller/${props.seller.id}`, {
         preserveScroll: true,
         onSuccess: () => closeModal(),
         onFinish: ()  => form.reset(),
@@ -30,8 +29,6 @@ const confirmSellerDeletion = () => {
 
 const closeModal = () => {
     confirmingSellerDeletion.value = false;
-
-    form.reset();
 };
 </script>
 

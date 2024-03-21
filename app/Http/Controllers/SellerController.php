@@ -49,7 +49,7 @@ class SellerController extends Controller
 
         if(!$seller) abort(500);
 
-        return $this->index();
+        return redirect('seller');
     }
 
     /**
@@ -61,6 +61,6 @@ class SellerController extends Controller
             abort(500);
         }
 
-        return $this->index();
+        return redirect('seller'); 
     }
 }
