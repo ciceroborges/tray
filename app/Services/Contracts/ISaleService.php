@@ -44,5 +44,5 @@ interface ISaleService
      * @param int $value
      * @return int
      */
-    public function getCommission(int $value): int;
+    public function getCommission(int $value, float $fee = null): int;
 }

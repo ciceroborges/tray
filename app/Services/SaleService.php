@@ -71,9 +71,9 @@ class SaleService implements ISaleService
       * @param int $value
       * @return int
       */
-      public function getCommission(int $value): int
+      public function getCommission(int $value, float $fee = null): int
       {
-          $fee = config('commission.fee.decimal');
+          $fee = $fee ?? config('commission.fee.decimal');
 
           return (int) round($value * $fee);
       }
