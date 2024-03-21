@@ -30,6 +30,14 @@ interface ISellerService
     public function delete(int $id): bool;
 
     /**
+     * Find the resource by id from storage.
+     * 
+     * @param int $id
+     * @return \App\Models\Seller|null
+     */
+    public function findById(int $id): Seller|null;
+    
+    /**
      * Find all resources from storage.
      * 
      * @param string $order. Default is desc.

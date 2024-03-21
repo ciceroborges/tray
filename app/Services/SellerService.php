@@ -42,6 +42,16 @@ class SellerService implements ISellerService
      }
  
      /**
+     * Find the resource by id from storage.
+     * 
+     * @param int $id
+     * @return \App\Models\Seller|null
+     */
+    public function findById(int $id): Seller|null
+    {
+        return $this->repository->findById($id);
+    }
+     /**
       * Find all resources from storage.
       * 
       * @return \Illuminate\Database\Eloquent\Collection

@@ -3,22 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SaleRequest;
-use App\Models\Sale;
 use App\Models\Seller;
+use App\Services\Contracts\ISaleService;
 
 class SaleController extends Controller
 {
+    protected $service;
+    
+    /**
+     * Setup.
+     */
+    public function __construct(ISaleService $service)
+    {
+        $this->service = $service;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index(Seller $seller)
     {   
-        $sales = $seller->sales()->orderByDesc('id')->get();
+        $sales = $this->service->findAllBySeller($seller->id);
 
-        return inertia('Sale/Index', [
-            'seller' => $seller, 
-            'sales'  => $sales
-        ]);
+        if(!$sales) abort(500);
+
+        return inertia('Sale/Index', compact('seller', 'sales'));
     }
 
     /**
@@ -26,22 +34,14 @@ class SaleController extends Controller
      */
     public function store(SaleRequest $request)
     {
-        $seller = Seller::find($request->seller_id);
+        $data = $request->validated();
 
-        $tax = (8.5 / 100); // Taxa de comissão em decimal;
+        $sale = $this->service->create($data);
 
-        $commission = (int) round($request->value * $tax);
+        if(!$sale) abort(500);
 
-        $data = [
-            'seller_id'  => $request->seller_id,
-            'name'       => $seller->name,
-            'email'      => $seller->email,
-            'commission' => $commission,
-            'value'      => $request->value,
-        ];
+        $seller = $data['seller_id'];
 
-        Sale::create($data);
-
-        return $this->index($seller);
+        return redirect()->route('sale', compact('seller'));
     }
 }
