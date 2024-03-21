@@ -4,17 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SellerRequest;
 use App\Models\Seller;
+use App\Services\Contracts\ISellerService;
 
 class SellerController extends Controller
 {
+    protected $service;
+    
+    /**
+     * Setup.
+     */
+    public function __construct(ISellerService $service)
+    {
+        $this->service = $service;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $sellers = Seller::with('sales')->orderByDesc('id')->get();
+        $sellers = $this->service->findAll();
 
-        return inertia('Seller/Index', ['sellers' => $sellers]);
+        if(!$sellers) abort(500);
+    
+        return inertia('Seller/Index', compact('sellers'));
     }
 
     /**
@@ -30,7 +43,11 @@ class SellerController extends Controller
      */
     public function store(SellerRequest $request)
     {
-        Seller::create($request->validated());
+        $data = $request->validated();
+
+        $seller = $this->service->create($data);
+
+        if(!$seller) abort(500);
 
         return $this->index();
     }
@@ -40,7 +57,9 @@ class SellerController extends Controller
      */
     public function destroy(Seller $seller)
     {
-        Seller::destroy($seller->id);
+        if(!$this->service->delete($seller->id)) {
+            abort(500);
+        }
 
         return $this->index();
     }
